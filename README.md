@@ -66,7 +66,8 @@ The mod is **built modularly**, so almost any included PBO can be easily removed
 - No idle animation with lowered weapon
 - No talking player avatar
 - Jumping over obstacles, climbing over walls and cutting down fences
-- Vector, MicroDAGR and Kestrel devices<br>
+- Vector, MicroDAGR and Kestrel devices
+
 ***and much more...***
 
 ### Guides & how-tos
