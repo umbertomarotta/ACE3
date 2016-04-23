@@ -17,10 +17,28 @@ params ["_unit"];
 
 if (!local _unit) exitWith {};
 
-private "_bodyStatus";
-
 // ["head", "body", "hand_l", "hand_r", "leg_l", "leg_r"]
-_bodyStatus = _unit getVariable [QGVAR(bodyPartStatus), [0,0,0,0,0,0]];
+private _bodyStatus = _unit getVariable [QGVAR(bodyPartStatus), [0,0,0,0,0,0]];
+
+if (GVAR(healHitPointAfterAdvBandage)) then {
+    private _hasOpenWounds = [0,0,0,0,0,0];
+    private _currentWounds = _unit getVariable [QGVAR(openWounds), []];
+    {
+        private _bodyPartIndex = _forEachIndex;
+        {
+            _x params ["", "", "_bodyPart", "_numOpenWounds", "_bloodLoss"];
+
+            if ((_bodyPart == _bodyPartIndex) && {(_numOpenWounds * _bloodLoss) > 0}) exitWith {
+                _hasOpenWounds set [_bodyPartIndex, 1];
+            };
+        } forEach _currentWounds;
+    } forEach _hasOpenWounds;
+    TRACE_1("",_hasOpenWounds);
+    _bodyStatus = +_bodyStatus; //Don't modify real array
+    {
+        _bodyStatus set [_forEachIndex, (_x * (_hasOpenWounds select _forEachIndex))];
+    } forEach _bodyStatus;
+};
 
 _bodyStatus params ["_headDamage", "_torsoDamage", "_handsDamageR", "_handsDamageL", "_legsDamageR", "_legsDamageL"];
 
