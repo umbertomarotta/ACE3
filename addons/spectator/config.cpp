@@ -21,8 +21,10 @@ class CfgPatches {
 
 class CfgRespawnTemplates {
     class ADDON {
+        displayName = CSTRING(DisplayName);
         onPlayerKilled = QFUNC(respawnTemplate);
         onPlayerRespawn = QFUNC(respawnTemplate);
+        respawnTypes[] = {2,3};
     };
 };
 
